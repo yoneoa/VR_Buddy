@@ -344,16 +344,6 @@ Prefab:
       propertyPath: m_Name
       value: Buddy
       objectReference: {fileID: 0}
-    - target: {fileID: 114470669373413370, guid: 9d6bf9190bba16e41a927caeff8f7845,
-        type: 2}
-      propertyPath: buddyHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114470669373413370, guid: 9d6bf9190bba16e41a927caeff8f7845,
-        type: 2}
-      propertyPath: knockedOut
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9d6bf9190bba16e41a927caeff8f7845, type: 2}
   m_IsPrefabParent: 0
@@ -389,7 +379,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: ce4b77858ec6c0f469b07b034c21a85f, type: 2}
+  - {fileID: 2100000, guid: 39afd57647d43a7448fcfb4469ce4cf9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
