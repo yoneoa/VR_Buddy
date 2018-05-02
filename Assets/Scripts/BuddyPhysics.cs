@@ -7,8 +7,9 @@ public class BuddyPhysics : MonoBehaviour {
 	/** torsoRotationScale scales how quickly (time) the buddy
 	tries to stand. */
 	public float torsoRotationScale;
+	GameObject torsoGo;
 	Rigidbody torsoRb;
-	Rigidbody head;
+	Rigidbody headRb;
 	Transform buddyGameObject;
 	/*For Whether the Buddy is knocked out. */
 	public bool knockedOut;
@@ -16,13 +17,18 @@ public class BuddyPhysics : MonoBehaviour {
 
 	public float buddyHealth;
 
+	public OVRInput.Controller left_hand;
+
+	public GameObject player;
+
 	
 	// Use this for initialization
 	void Start () {
+		torsoGo = GameObject.Find("Torso");
 		torsoRb = gameObject.GetComponent<Rigidbody>();
 		buddyGameObject = gameObject.GetComponent<Transform>();
-		head = GameObject.Find("Head").GetComponent<Rigidbody>();
-		head.mass = 1;
+		headRb = GameObject.Find("Head").GetComponent<Rigidbody>();
+		//head.mass = 1;
 		sleepZ = GameObject.Find("Head").GetComponent<ParticleSystem>();
 	}
 	
@@ -30,6 +36,16 @@ public class BuddyPhysics : MonoBehaviour {
 	void Update () {
 		knockOut();
 		standUp();
+		if (OVRInput.Get (OVRInput.Button.One, left_hand)) {
+			knockedOut = false;
+			knockOutTimer = 10;
+			if (buddyHealth < 100) {
+				buddyHealth += 10;
+			}
+			Vector3 forcePull = player.transform.position - torsoGo.transform.position;
+			torsoRb.transform.LookAt (player.transform.position);
+			torsoRb.AddRelativeForce (Vector3.forward * 50, ForceMode.Force);
+		}
 	}
 
 	float knockOutTimer = 10;
@@ -43,13 +59,13 @@ public class BuddyPhysics : MonoBehaviour {
 				knockedOut = false;
 			}
 			torsoRb.useGravity = true;
-			head.mass = 1;
+			headRb.mass = 1;
 			sleepZ.Play();
 		} else {
 			sleepZ.Pause();
 			sleepZ.Clear();
 			torsoRb.useGravity = false;
-			head.mass = 0;
+			headRb.mass = 0.01f;
 		}
 		// if(Input.GetMouseButtonDown(0)) {
 		// 	if (knockedOut) {
@@ -59,9 +75,9 @@ public class BuddyPhysics : MonoBehaviour {
 		// 	}	
 		// }
 
-		if(Input.GetMouseButtonDown(0)) {
-			buddyHealth -= 10;
-		}
+		// if(Input.GetMouseButtonDown(0)) {
+		// 	buddyHealth -= 10;
+		// }
 
 		if(buddyHealth <= 0) {
 				knockedOut = true;
@@ -82,4 +98,5 @@ public class BuddyPhysics : MonoBehaviour {
 
 		torsoRb.velocity = veloVect;
 	}
+
 }
